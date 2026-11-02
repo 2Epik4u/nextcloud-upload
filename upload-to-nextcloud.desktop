@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=inode/directory;application/octet-stream;*/*
+X-KDE-Priority=TopLevel
+X-KDE-StartupNotify=false
+Icon=folder-publicshare
+Actions=SendWithNextcloud
+
+[Desktop Action SendWithNextcloud]
+Name=Upload to Nextcloud
+Exec=~/PyCharmMiscProject/.venv/bin/python ~/PyCharmMiscProject/uploadnextcloud.py urusername urpassword %F
+Icon=folder-publicshare
