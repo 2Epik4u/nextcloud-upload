@@ -5,14 +5,19 @@ import subprocess
 import os
 import time
 start = time.time()
+if len(sys.argv) <5:
+    print("Usage: uploadnextcloud.py (file path) (nextcloud username) (nextcloud password) (nextcloud instance link)")
+    sys.exit()
+
 file = os.path.basename(sys.argv[3])
 user = sys.argv[1]
 password = sys.argv[2]
 headers = {'user-agent': 'epikscript/1.0', "OCS-APIRequest": "true"}
+instance = sys.argv[4]
 with open(sys.argv[3], "rb") as f:
-    r = requests.put(f"https://upload.ooodt.me/remote.php/dav/files/{user}/" + file, data=f, auth=(user, password), headers=headers)
+    r = requests.put(f"https://{instance}/remote.php/dav/files/{user}/" + file, data=f, auth=(user, password), headers=headers)
 
-share = requests.post("https://upload.ooodt.me/ocs/v2.php/apps/files_sharing/api/v1/shares", headers=headers, data={"path": file, "shareType": 3}, auth=(user,password))
+share = requests.post(f"https://{instance}/ocs/v2.php/apps/files_sharing/api/v1/shares", headers=headers, data={"path": file, "shareType": 3}, auth=(user,password))
 try:
     root = ET.fromstring(share.text)
     pro = root.find('data')
